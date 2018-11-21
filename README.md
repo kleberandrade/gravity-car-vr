@@ -34,7 +34,7 @@ Simulador imersivo de carrinho de rolimã
         C:\Windows\System32;
         C:\Windows\SysWOW64 (caso sistema operacional 64-bits (x64)).
 
-*Copie o arquivo RXTXcomm.jar para:
+* Copie o arquivo RXTXcomm.jar para:
 
         C:\Program Files\Java\jre\jrex\lib\ext, por exemplo C:\Program Files\Java\jre7\lib\ext.
          
