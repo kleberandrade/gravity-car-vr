@@ -10,6 +10,12 @@ Simulador imersivo de carrinho de rolimã
 - Linguagem Java      - Programação do Plugin para comunicação Bluetooth e do Monitor
 - Arduino             - Ambiente para sistemas embarcados
 
+## Configurações do Arduino
+
+* Abrir o menu Sketch -> Incluir Bibliotecas -> Gerenciar Bibliotecas
+* Procurar a biblioteca "ArduinoJson"
+* Instalar a versão 5.13.3
+
 Créditos
 ----
 
