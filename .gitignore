@@ -36,3 +36,6 @@ GravityCarVR Game/sysinfo.txt
 # Builds
 GravityCarVR Game/*.apk
 GravityCarVR Game/*.unitypackage
+/Desktop Monitor/JavaApplication27/nbproject/private/
+/Desktop Monitor/GravityCarVRDesktopMonitor/nbproject/private/
+/Desktop Monitor/GravityCarVRLibrary/nbproject/private/
