@@ -21,17 +21,14 @@ Créditos
 
 - Bruno Cardoso Ambrosio
 - Fernando Daniel Muniz
-- Giulie Brito Silva
 - Guilbert Adalson de Oliveira
 - Jader Artur Costa
-- Jonas Fernando Pires de Lima
 - Leticia Yasmin Luiz
 - Maiara de Carvalho Martins
 - Maini Militao Brito
 - Mauricio Pierangeli de Albuquerque Rother
-- Paula Roberta P.S. Rodrigues
 - Raul César Rodrigues da Silva Pavani
-- Tiago Guerino de Oliveira Bassan
+- Tiago Guerino de Oliveira Bassani
 - Victoria Andressa Santos Macedo de Faria
 - Kleber de Oliveira Andrade (Orientador)
 
