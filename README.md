@@ -6,7 +6,7 @@ Simulador imersivo de carrinho de rolimã
 - Unity 2018.2.7      - Desenvolvimento do Jogo
 - Linguagem C#        - Programação do Jogo
 - Netbeans            - Ambiente de desenvolvimento do Monitor para Desktop
-- Android Studui      - Ambiente de desenvolvimento do Plugin android
+- Android Studio      - Ambiente de desenvolvimento do Plugin android
 - Linguagem Java      - Programação do Plugin para comunicação Bluetooth e do Monitor
 - Arduino             - Ambiente para sistemas embarcados
 - [ArduinoJson](https://arduinojson.org/) - Parser JSON eficiente para Arduino
