@@ -9,6 +9,9 @@ Simulador imersivo de carrinho de rolimã
 - Android Studui      - Ambiente de desenvolvimento do Plugin android
 - Linguagem Java      - Programação do Plugin para comunicação Bluetooth e do Monitor
 - Arduino             - Ambiente para sistemas embarcados
+- [ArduinoJson](https://arduinojson.org/) - Parser JSON eficiente para Arduino
+- [JSerialComm](http://fazecast.github.io/jSerialComm/) - Comunicação Serial para Java
+
 
 ## Configurações
 
@@ -17,36 +20,6 @@ Simulador imersivo de carrinho de rolimã
 * Abrir o menu Sketch -> Incluir Bibliotecas -> Gerenciar Bibliotecas
 * Procurar a biblioteca "ArduinoJson"
 * Instalar a versão 5.13.3
-
-### Netbeans (Instalar biblioteca XXXXXXXX)
-
-
-
-
-### Netbeans (Instalar biblioteca RxTx)
-
-#### Windows
-
-* Copie o arquivo rxtxSerial.dll para:
-
-        C:\Program Files\Java\jdkx.x\bin, por exemplo C:\Program Files\Java\jdk1.6.40\bin;
-        C:\Program Files\Java\jrex\bin, por exemplo C:\Program Files\Java\jre7\bin;
-        C:\Windows\System32;
-        C:\Windows\SysWOW64 (caso sistema operacional 64-bits (x64)).
-
-* Copie o arquivo RXTXcomm.jar para:
-
-        C:\Program Files\Java\jre\jrex\lib\ext, por exemplo C:\Program Files\Java\jre7\lib\ext.
-         
-#### Linux
-
-* Copie o arquivo librxtxSerial.so para:   
-
-        /usr/lib/, exemplo: cp /home/Usuario/librxtxSerial.so /usr/lib/.
-
-* Copie o arquivo RXTXcomm.jar para:
-
-        /usr/share/java/, exemplo.: cp /home/Usuario/RXTXcomm.jar /usr/share/java/.
 
 
 Créditos
