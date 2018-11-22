@@ -19,12 +19,12 @@ void GravityCar::calibrate(int steps){
 
 void GravityCar::writeSerialJson(void){
   StaticJsonBuffer<JSON_BUFFER_SIZE> jsonBuffer;
-  JsonObject& root = jsonBuffer.createObject();
-  root[JSON_LEFT_BRAKE_TAG] = getLeftBrake();
-  root[JSON_RIGHT_BRAKE_TAG] = getRightBrake();
-  root[JSON_STEERING_ANGLE_TAG] = getSteeringAngle();
-  root.printTo(Serial);
-  Serial.println();
+  JsonObject& object = jsonBuffer.createObject();
+  object[JSON_LEFT_BRAKE_TAG] = getLeftBrake();
+  object[JSON_RIGHT_BRAKE_TAG] = getRightBrake();
+  object[JSON_STEERING_ANGLE_TAG] = getSteeringAngle();
+  object.printTo(Serial);
+  Serial.print("\r\n");
 }
 
 void GravityCar::readSerialJson(void){

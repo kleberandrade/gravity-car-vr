@@ -2,26 +2,13 @@ package br.edu.fatec.gravitycar.communication;
 
 import br.edu.fatec.gravitycar.json.JSONObject;
 import br.edu.fatec.gravitycarvr.models.GravityCarPackage;
-import gnu.io.CommPortIdentifier;
-import gnu.io.NoSuchPortException;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
-import gnu.io.UnsupportedCommOperationException;
-import java.awt.HeadlessException;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.TooManyListenersException;
+import com.fazecast.jSerialComm.SerialPort;
+import com.fazecast.jSerialComm.SerialPortDataListener;
+import com.fazecast.jSerialComm.SerialPortEvent;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import jdk.nashorn.internal.parser.JSONParser;
 
-public final class Arduino implements SerialPortEventListener {
+public final class Arduino implements SerialPortDataListener {
 
     private static final int QUEUE_SIZE = 64;
 
@@ -30,59 +17,30 @@ public final class Arduino implements SerialPortEventListener {
     private static final String JSON_STEERING_ANGLE = "steeringangle";
 
     private SerialPort mSerialPort = null;
-    private BufferedReader mSerialIn = null;
-    private final int mBaudRate;
-    private final String mPort;
 
-    private BlockingQueue<GravityCarPackage> mQueue = null;
+    private volatile StringBuilder mBuffer = new StringBuilder();
 
-    public Arduino(String port, int baudRate) {
-        mPort = port;
-        mBaudRate = baudRate;
-        mQueue = new ArrayBlockingQueue<>(QUEUE_SIZE);
-        initialize();
-    }
+    private BlockingQueue<GravityCarPackage> mQueue = new ArrayBlockingQueue<>(QUEUE_SIZE);
 
-    public void initialize() {
-        try {
-            CommPortIdentifier portId = null;
-            portId = CommPortIdentifier.getPortIdentifier(mPort);
+    public boolean connect(String port, int baudRate) {
 
-            mSerialPort = (SerialPort) portId.open("Comunicação serial", this.mBaudRate);
-            mSerialIn = new BufferedReader(new InputStreamReader(mSerialPort.getInputStream()));
-            mSerialPort.setSerialPortParams(this.mBaudRate, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+        mSerialPort = SerialPort.getCommPort(port);
+        mSerialPort.setComPortTimeouts(SerialPort.TIMEOUT_NONBLOCKING, 0, 0);
+        mSerialPort.setComPortParameters(baudRate, 8, SerialPort.ONE_STOP_BIT, SerialPort.NO_PARITY);
 
-            mSerialPort.addEventListener(this);
-            mSerialPort.notifyOnDataAvailable(true);
-
-        } catch (NoSuchPortException | PortInUseException | UnsupportedCommOperationException | HeadlessException | IOException | TooManyListenersException error) {
-            JOptionPane.showMessageDialog(null, error.getMessage());
+        if (mSerialPort.openPort()) {
+            mSerialPort.addDataListener(this);
+            return true;
+        } else {
+            disconnect();
+            return false;
         }
     }
 
-    public synchronized void close() {
+    public synchronized void disconnect() {
         if (mSerialPort != null) {
-            mSerialPort.removeEventListener();
-            mSerialPort.close();
-        }
-
-        try {
-            mSerialIn.close();
-        } catch (IOException error) {
-            JOptionPane.showMessageDialog(null, error.getMessage());
-        }
-    }
-
-    @Override
-    public synchronized void serialEvent(SerialPortEvent spe) {
-        if (spe.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
-            try {
-                String inputLine = mSerialIn.readLine();
-                GravityCarPackage gravityCar = fromJson(inputLine);
-                mQueue.add(gravityCar);
-            } catch (IOException error) {
-                System.out.println(error.getMessage());
-            }
+            mSerialPort.removeDataListener();
+            mSerialPort.closePort();
         }
     }
 
@@ -90,16 +48,54 @@ public final class Arduino implements SerialPortEventListener {
         return mQueue.isEmpty();
     }
 
-    public synchronized GravityCarPackage remove() throws InterruptedException {
+    public GravityCarPackage remove() throws InterruptedException {
         return mQueue.take();
     }
 
-    public GravityCarPackage fromJson(String json) {
+    public synchronized GravityCarPackage fromJson(String json) {
         JSONObject jsonObject = new JSONObject(json);
         int leftBrake = jsonObject.getInt(JSON_LEFT_BRAKE);
         int rightBrake = jsonObject.getInt(JSON_RIGHT_BRAKE);
         int steeringAngle = jsonObject.getInt(JSON_STEERING_ANGLE);
 
         return new GravityCarPackage(leftBrake, rightBrake, steeringAngle);
+    }
+
+    @Override
+    public int getListeningEvents() {
+        return SerialPort.LISTENING_EVENT_DATA_AVAILABLE;
+    }
+
+    @Override
+    public void serialEvent(SerialPortEvent event) {
+
+        if (event.getEventType() != SerialPort.LISTENING_EVENT_DATA_AVAILABLE) {
+            return;
+        }
+
+        byte[] newData = new byte[mSerialPort.bytesAvailable()];
+        mSerialPort.readBytes(newData, newData.length);
+
+        String part = new String(newData);
+        mBuffer.append(part);
+
+        checkCommandBuffer();
+    }
+
+    private void checkCommandBuffer() {
+        String commands = mBuffer.toString();
+        if (commands.contains("}") && commands.contains("{") && (commands.lastIndexOf("{") < commands.lastIndexOf("}"))) {
+
+            int startIndex = commands.lastIndexOf("{");
+            int endIndex = commands.lastIndexOf("}") + 1;
+
+            String command = commands.substring(startIndex, endIndex);
+            mBuffer.delete(startIndex, endIndex);
+
+            GravityCarPackage gravityCar = fromJson(command);
+            if (gravityCar != null) {
+                mQueue.add(gravityCar);
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 package br.edu.fatec.gravitycar.chart;
 
+import br.edu.fatec.gravitycarvr.utils.StatisticsTracker;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
@@ -13,6 +14,8 @@ import org.jfree.data.xy.XYSeriesCollection;
 public class RealTimeLineChart {
 
     private final XYSeries mSeries = new XYSeries("");
+    
+    private StatisticsTracker mStatisticsTracker = new StatisticsTracker();
 
     public RealTimeLineChart(final String title, final String xLabel, final String yLabel, JPanel panel) {
 
@@ -37,9 +40,27 @@ public class RealTimeLineChart {
 
     public void addSeries(double xValue, double yValue, int maxItemCounts) {
         mSeries.add(xValue, yValue);
-
+        mStatisticsTracker.addNumber(yValue);
+        
         if (mSeries.getItemCount() > maxItemCounts) {
             mSeries.delete(0, 1);
         }
+    }
+    
+    public double getMinimum() {
+        return mStatisticsTracker.getMinimum();
+    }
+
+    public double getMaximum() {
+        return mStatisticsTracker.getMaximum();
+    }
+
+    public double getAverage() {
+        return mStatisticsTracker.getAverage();
+    }
+    
+    public void clear(){
+        mSeries.clear();
+        mStatisticsTracker.clear();
     }
 }
