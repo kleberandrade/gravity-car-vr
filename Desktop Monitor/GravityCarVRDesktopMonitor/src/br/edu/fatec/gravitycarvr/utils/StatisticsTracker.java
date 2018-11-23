@@ -5,7 +5,7 @@ public class StatisticsTracker {
     private int mCount;
     private double mTotal;
     private double mMinimum;
-    private double mMximum;
+    private double mMaximum;
     
     public void clear(){
         mCount = 0;
@@ -21,11 +21,11 @@ public class StatisticsTracker {
     private void adjustMinimumAndMaximum(double number) {
         if (containsSingleNumber()) {
             mMinimum = number;
-            mMximum = number;
+            mMaximum = number;
         } else if (number < mMinimum) {
             mMinimum = number;
-        } else if (number > mMximum) {
-            mMximum = number;
+        } else if (number > mMaximum) {
+            mMaximum = number;
         }
     }
     
@@ -46,7 +46,7 @@ public class StatisticsTracker {
     }
 
     public double getMaximum() {
-        return mMximum;
+        return mMaximum;
     }
 
     public double getAverage() {

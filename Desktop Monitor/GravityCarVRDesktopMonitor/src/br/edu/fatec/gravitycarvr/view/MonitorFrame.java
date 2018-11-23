@@ -62,6 +62,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -86,8 +87,8 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         jLabel13 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         mReceiveMessageRawTextArea1 = new javax.swing.JTextArea();
-        jSlider1 = new javax.swing.JSlider();
-        jSlider2 = new javax.swing.JSlider();
+        mRightVibrationMotorSlider = new javax.swing.JSlider();
+        mLeftVibrationMotorSlider = new javax.swing.JSlider();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -123,6 +124,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gravity Car VR Telemetry Viewer");
+        setMinimumSize(new java.awt.Dimension(1214, 846));
 
         jPanel1.setBackground(new java.awt.Color(236, 240, 241));
 
@@ -317,6 +319,12 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         mReceiveMessageRawTextArea1.setWrapStyleWord(true);
         jScrollPane2.setViewportView(mReceiveMessageRawTextArea1);
 
+        mRightVibrationMotorSlider.setMaximum(1023);
+        mRightVibrationMotorSlider.setValue(0);
+
+        mLeftVibrationMotorSlider.setMaximum(1023);
+        mLeftVibrationMotorSlider.setValue(0);
+
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel14.setText("Left vibration motors");
 
@@ -325,11 +333,15 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel16.setText("0");
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mLeftVibrationMotorSlider, org.jdesktop.beansbinding.ELProperty.create("${value}"), jLabel16, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel17.setText("0");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mRightVibrationMotorSlider, org.jdesktop.beansbinding.ELProperty.create("${value}"), jLabel17, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -339,8 +351,8 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
                 .addContainerGap()
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
-                    .addComponent(jSlider1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSlider2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(mRightVibrationMotorSlider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(mLeftVibrationMotorSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel12Layout.createSequentialGroup()
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -366,13 +378,13 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mLeftVibrationMotorSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mRightVibrationMotorSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -731,6 +743,8 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        bindingGroup.bind();
+
         setSize(new java.awt.Dimension(1230, 885));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -858,8 +872,6 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSlider jSlider1;
-    private javax.swing.JSlider jSlider2;
     private javax.swing.JTextField mAvgLeftBrakeTextField;
     private javax.swing.JTextField mAvgRightBrakeTextField;
     private javax.swing.JTextField mAvgSteeringAngleTextField;
@@ -867,6 +879,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JButton mConnectButton;
     private javax.swing.JButton mDisconnectButton;
     private javax.swing.JPanel mLeftBrakeLineChartPanel;
+    private javax.swing.JSlider mLeftVibrationMotorSlider;
     private javax.swing.JTextField mMaxLeftBrakeTextField;
     private javax.swing.JTextField mMaxRightBrakeTextField;
     private javax.swing.JTextField mMaxSteeringAngleTextField;
@@ -877,8 +890,10 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JTextArea mReceiveMessageRawTextArea;
     private javax.swing.JTextArea mReceiveMessageRawTextArea1;
     private javax.swing.JPanel mRightBrakeLineChartPanel;
+    private javax.swing.JSlider mRightVibrationMotorSlider;
     private javax.swing.JComboBox<String> mSerialPortComboBox;
     private javax.swing.JPanel mSteeringAngleLineChartPanel;
     private javax.swing.JPanel mTransmitLedPanel;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
