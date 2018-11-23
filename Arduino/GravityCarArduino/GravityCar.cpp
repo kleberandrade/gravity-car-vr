@@ -25,6 +25,7 @@ void GravityCar::writeSerialJson(void){
   object[JSON_STEERING_ANGLE_TAG] = getSteeringAngle();
   object.printTo(Serial);
   Serial.print("\r\n");
+  Serial.flush();
 }
 
 void GravityCar::readSerialJson(void){

@@ -1,4 +1,4 @@
-package br.edu.fatec.gravitycar.json;
+package br.edu.fatec.gravitycarvr.json;
 /**
  * The <code>JSONString</code> interface allows a <code>toJSONString()</code>
  * method so that a class can change the behavior of

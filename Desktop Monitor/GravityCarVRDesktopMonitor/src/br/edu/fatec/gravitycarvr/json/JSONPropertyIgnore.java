@@ -1,4 +1,4 @@
-package br.edu.fatec.gravitycar.json;
+package br.edu.fatec.gravitycarvr.json;
 
 /*
 Copyright (c) 2018 JSON.org

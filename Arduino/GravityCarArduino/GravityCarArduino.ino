@@ -5,7 +5,7 @@
 #define PIN_STEERING_ANGLE  A2
 
 #define SERIAL_BAUD_RATE    9600
-#define INTERVAL            10
+#define INTERVAL            20
 
 long previousMillis = 0;
 

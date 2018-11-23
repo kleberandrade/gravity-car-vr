@@ -1,12 +1,18 @@
-package br.edu.fatec.gravitycar.chart;
+package br.edu.fatec.gravitycarvr.chart;
 
 import br.edu.fatec.gravitycarvr.utils.StatisticsTracker;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.chart.title.TextTitle;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -14,7 +20,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 public class RealTimeLineChart {
 
     private final XYSeries mSeries = new XYSeries("");
-    
+
     private StatisticsTracker mStatisticsTracker = new StatisticsTracker();
 
     public RealTimeLineChart(final String title, final String xLabel, final String yLabel, JPanel panel) {
@@ -30,6 +36,8 @@ public class RealTimeLineChart {
                 PlotOrientation.VERTICAL,
                 false, true, false);
 
+        format(chart, title);
+
         ChartPanel chartPanel = new ChartPanel(chart);
 
         panel.removeAll();
@@ -38,15 +46,39 @@ public class RealTimeLineChart {
         panel.validate();
     }
 
+    private void format(JFreeChart chart, String title) {
+        TextTitle my_Chart_title = new TextTitle(title, new Font("Tahoma", Font.BOLD, 12));
+        chart.setTitle(my_Chart_title);
+        chart.setBackgroundPaint(new Color(236, 240, 241));
+        
+        XYPlot plot = (XYPlot) chart.getPlot();
+        plot.setBackgroundPaint(new Color(236, 240, 241));
+        plot.setDomainGridlinePaint(new Color(149, 165, 166));
+        plot.setRangeGridlinePaint(new Color(149, 165, 166));
+        
+        XYItemRenderer renderer = plot.getRenderer();
+        renderer.setSeriesPaint(0, new Color(41, 128, 185));
+
+        Font fontLabel = new Font("Tahoma", Font.BOLD, 10);
+        
+        ValueAxis labelX = plot.getRangeAxis();
+        labelX.setLabelFont(fontLabel);
+        labelX.setTickLabelFont(fontLabel);
+        
+        ValueAxis labelY = plot.getDomainAxis();
+        labelY.setLabelFont(fontLabel);
+        labelY.setTickLabelFont(fontLabel);
+    }
+
     public void addSeries(double xValue, double yValue, int maxItemCounts) {
         mSeries.add(xValue, yValue);
         mStatisticsTracker.addNumber(yValue);
-        
+
         if (mSeries.getItemCount() > maxItemCounts) {
             mSeries.delete(0, 1);
         }
     }
-    
+
     public double getMinimum() {
         return mStatisticsTracker.getMinimum();
     }
@@ -58,8 +90,8 @@ public class RealTimeLineChart {
     public double getAverage() {
         return mStatisticsTracker.getAverage();
     }
-    
-    public void clear(){
+
+    public void clear() {
         mSeries.clear();
         mStatisticsTracker.clear();
     }

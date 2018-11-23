@@ -1,4 +1,4 @@
-package br.edu.fatec.gravitycar.json;
+package br.edu.fatec.gravitycarvr.json;
 
 import static java.lang.String.format;
 

@@ -1,12 +1,11 @@
 package br.edu.fatec.gravitycarvr.view;
 
-import br.edu.fatec.gravitycar.chart.RealTimeLineChart;
-import br.edu.fatec.gravitycar.communication.Arduino;
+import br.edu.fatec.gravitycarvr.chart.RealTimeLineChart;
+import br.edu.fatec.gravitycarvr.communication.Arduino;
 import br.edu.fatec.gravitycarvr.models.GravityCarPackage;
 import com.fazecast.jSerialComm.SerialPort;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.Timer;
@@ -44,7 +43,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         }
         mBaudRateComboBox.setSelectedItem("9600");
         mDisconnectButton.setEnabled(false);
-        
+
         mLeftBrakeChart = new RealTimeLineChart("Left Brake", "Time", "Values", mLeftBrakeLineChartPanel);
         mRightBrakeChart = new RealTimeLineChart("Right Brake", "Time", "Values", mRightBrakeLineChartPanel);
         mSteeringAngleChart = new RealTimeLineChart("Steering Angle", "Time", "Values", mSteeringAngleLineChartPanel);
@@ -52,12 +51,12 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         mTimer = new Timer(SPEED_TIME, this);
         mTimer.start();
     }
-    
-    public void updateChart(double x, double y, RealTimeLineChart chart, JTextField min, JTextField max, JTextField avg){
+
+    public void updateChart(double x, double y, RealTimeLineChart chart, JTextField min, JTextField max, JTextField avg) {
         chart.addSeries(x, y, MAX_ITEM_COUNTS);
-        min.setText(String.format("%.2f", chart.getMinimum()));
-        max.setText(String.format("%.2f", chart.getMaximum()));
-        avg.setText(String.format("%.2f", chart.getAverage()));
+        min.setText(String.format("%.1f", chart.getMinimum()));
+        max.setText(String.format("%.1f", chart.getMaximum()));
+        avg.setText(String.format("%.1f", chart.getAverage()));
     }
 
     @SuppressWarnings("unchecked")
@@ -77,6 +76,22 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         jLabel3 = new javax.swing.JLabel();
         mBaudRateComboBox = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        mReceiveMessageRawTextArea = new javax.swing.JTextArea();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jPanel12 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        mReceiveMessageRawTextArea1 = new javax.swing.JTextArea();
+        jSlider1 = new javax.swing.JSlider();
+        jSlider2 = new javax.swing.JSlider();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         mLeftBrakeLineChartPanel = new javax.swing.JPanel();
@@ -180,7 +195,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         mBaudRateComboBox.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel4.setText("Baud Rate");
+        jLabel4.setText("Baud rate");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -232,17 +247,155 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel6.setBackground(new java.awt.Color(236, 240, 241));
+        jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(149, 165, 166)));
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel11.setText("Receive Message (Raw)");
+
+        mReceiveMessageRawTextArea.setEditable(false);
+        mReceiveMessageRawTextArea.setColumns(20);
+        mReceiveMessageRawTextArea.setRows(5);
+        mReceiveMessageRawTextArea.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(mReceiveMessageRawTextArea);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+        );
+
+        jPanel10.setBackground(new java.awt.Color(236, 240, 241));
+        jPanel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(149, 165, 166)));
+
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br.edu.fatec.gravitycarvr.icons/logo_fatec.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel12.setBackground(new java.awt.Color(236, 240, 241));
+        jPanel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(149, 165, 166)));
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel13.setText("Send Message (Raw)");
+
+        mReceiveMessageRawTextArea1.setEditable(false);
+        mReceiveMessageRawTextArea1.setColumns(20);
+        mReceiveMessageRawTextArea1.setRows(5);
+        mReceiveMessageRawTextArea1.setWrapStyleWord(true);
+        jScrollPane2.setViewportView(mReceiveMessageRawTextArea1);
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel14.setText("Left vibration motors");
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel15.setText("Right vibration motors");
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel16.setText("0");
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel17.setText("0");
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addComponent(jSlider1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSlider2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanel4.setBackground(new java.awt.Color(236, 240, 241));
@@ -257,7 +410,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         mLeftBrakeLineChartPanel.setLayout(mLeftBrakeLineChartPanelLayout);
         mLeftBrakeLineChartPanelLayout.setHorizontalGroup(
             mLeftBrakeLineChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 444, Short.MAX_VALUE)
+            .addGap(0, 744, Short.MAX_VALUE)
         );
         mLeftBrakeLineChartPanelLayout.setVerticalGroup(
             mLeftBrakeLineChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -312,15 +465,15 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
                 .addContainerGap()
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mMinLeftBrakeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addComponent(mMinLeftBrakeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mAvgLeftBrakeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addComponent(mAvgLeftBrakeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mMaxLeftBrakeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addComponent(mMaxLeftBrakeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -356,7 +509,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         mRightBrakeLineChartPanel.setLayout(mRightBrakeLineChartPanelLayout);
         mRightBrakeLineChartPanelLayout.setHorizontalGroup(
             mRightBrakeLineChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 444, Short.MAX_VALUE)
+            .addGap(0, 744, Short.MAX_VALUE)
         );
         mRightBrakeLineChartPanelLayout.setVerticalGroup(
             mRightBrakeLineChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -411,15 +564,15 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
                 .addContainerGap()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mMinRightBrakeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addComponent(mMinRightBrakeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mAvgRightBrakeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addComponent(mAvgRightBrakeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mMaxRightBrakeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addComponent(mMaxRightBrakeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -455,7 +608,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         mSteeringAngleLineChartPanel.setLayout(mSteeringAngleLineChartPanelLayout);
         mSteeringAngleLineChartPanelLayout.setHorizontalGroup(
             mSteeringAngleLineChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 444, Short.MAX_VALUE)
+            .addGap(0, 744, Short.MAX_VALUE)
         );
         mSteeringAngleLineChartPanelLayout.setVerticalGroup(
             mSteeringAngleLineChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -510,15 +663,15 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
                 .addContainerGap()
                 .addComponent(jLabel23)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mMinSteeringAngleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addComponent(mMinSteeringAngleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel24)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mAvgSteeringAngleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addComponent(mAvgSteeringAngleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel25)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mMaxSteeringAngleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addComponent(mMaxSteeringAngleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -578,7 +731,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(930, 720));
+        setSize(new java.awt.Dimension(1230, 885));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -589,6 +742,8 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         if (mArduino.connect(port, BAUD_RATES[index])) {
             mConnectButton.setEnabled(false);
             mDisconnectButton.setEnabled(true);
+            mSerialPortComboBox.setEnabled(false);
+            mBaudRateComboBox.setEnabled(false);
             mLeftBrakeChart.clear();
             mRightBrakeChart.clear();
             mSteeringAngleChart.clear();
@@ -599,38 +754,36 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         mArduino.disconnect();
         mConnectButton.setEnabled(true);
         mDisconnectButton.setEnabled(false);
+        mSerialPortComboBox.setEnabled(true);
+        mBaudRateComboBox.setEnabled(true);
     }//GEN-LAST:event_mDisconnectButtonActionPerformed
 
     @Override
     public void actionPerformed(ActionEvent e) {
-         try {
+        try {
             while (!mArduino.isEmpty()) {
                 GravityCarPackage gravityCar = mArduino.remove();
-                
-                updateChart(gravityCar.getmMillis() / 1000.0, 
-                        gravityCar.getmLeftBrake(), 
-                        mLeftBrakeChart, 
-                        mMinLeftBrakeTextField, 
-                        mMaxLeftBrakeTextField, 
+
+                updateChart(gravityCar.getmMillis() / 1000.0,
+                        gravityCar.getmLeftBrake(),
+                        mLeftBrakeChart,
+                        mMinLeftBrakeTextField,
+                        mMaxLeftBrakeTextField,
                         mAvgLeftBrakeTextField);
-                
+
                 updateChart(gravityCar.getmMillis() / 1000.0,
-                        gravityCar.getmRightBrake(), 
-                        mRightBrakeChart, 
-                        mMinRightBrakeTextField, 
-                        mMaxRightBrakeTextField, 
+                        gravityCar.getmRightBrake(),
+                        mRightBrakeChart,
+                        mMinRightBrakeTextField,
+                        mMaxRightBrakeTextField,
                         mAvgRightBrakeTextField);
-                
+
                 updateChart(gravityCar.getmMillis() / 1000.0,
-                        gravityCar.getmSteeringAngle(), 
-                        mSteeringAngleChart, 
-                        mMinSteeringAngleTextField, 
+                        gravityCar.getmSteeringAngle(),
+                        mSteeringAngleChart,
+                        mMinSteeringAngleTextField,
                         mMaxSteeringAngleTextField,
                         mAvgSteeringAngleTextField);
-                
-                //mLeftBrakeChart.addSeries(gravityCar.getmMillis() / 1000.0, gravityCar.getmLeftBrake(), MAX_ITEM_COUNTS);
-                //mRightBrakeChart.addSeries(gravityCar.getmMillis() / 1000.0, gravityCar.getmRightBrake(), MAX_ITEM_COUNTS);
-                //mSteeringAngleChart.addSeries(gravityCar.getmMillis() / 1000.0, gravityCar.getmSteeringAngle(), MAX_ITEM_COUNTS); 
             }
         } catch (InterruptedException ex) {
             System.out.println(ex.getMessage());
@@ -672,6 +825,13 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
@@ -684,15 +844,22 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSlider jSlider1;
+    private javax.swing.JSlider jSlider2;
     private javax.swing.JTextField mAvgLeftBrakeTextField;
     private javax.swing.JTextField mAvgRightBrakeTextField;
     private javax.swing.JTextField mAvgSteeringAngleTextField;
@@ -707,6 +874,8 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JTextField mMinRightBrakeTextField;
     private javax.swing.JTextField mMinSteeringAngleTextField;
     private javax.swing.JPanel mReceiveLedPanel;
+    private javax.swing.JTextArea mReceiveMessageRawTextArea;
+    private javax.swing.JTextArea mReceiveMessageRawTextArea1;
     private javax.swing.JPanel mRightBrakeLineChartPanel;
     private javax.swing.JComboBox<String> mSerialPortComboBox;
     private javax.swing.JPanel mSteeringAngleLineChartPanel;

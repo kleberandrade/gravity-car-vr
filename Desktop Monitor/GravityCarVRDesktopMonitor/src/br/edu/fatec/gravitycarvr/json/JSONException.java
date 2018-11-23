@@ -1,4 +1,4 @@
-package br.edu.fatec.gravitycar.json;
+package br.edu.fatec.gravitycarvr.json;
 
 /**
  * The JSONException is thrown by the JSON.org classes when things are amiss.

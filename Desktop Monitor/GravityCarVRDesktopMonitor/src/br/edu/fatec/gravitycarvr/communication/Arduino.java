@@ -1,6 +1,6 @@
-package br.edu.fatec.gravitycar.communication;
+package br.edu.fatec.gravitycarvr.communication;
 
-import br.edu.fatec.gravitycar.json.JSONObject;
+import br.edu.fatec.gravitycarvr.json.JSONObject;
 import br.edu.fatec.gravitycarvr.models.GravityCarPackage;
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortDataListener;
