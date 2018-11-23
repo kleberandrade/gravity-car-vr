@@ -1,6 +1,7 @@
 package br.edu.fatec.gravitycarvr.chart;
 
 import br.edu.fatec.gravitycarvr.utils.StatisticsTracker;
+import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -58,6 +59,7 @@ public class RealTimeLineChart {
         
         XYItemRenderer renderer = plot.getRenderer();
         renderer.setSeriesPaint(0, new Color(41, 128, 185));
+        renderer.setSeriesStroke(0, new BasicStroke(2));
 
         Font fontLabel = new Font("Tahoma", Font.BOLD, 10);
         
