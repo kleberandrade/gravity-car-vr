@@ -17,8 +17,8 @@ public class Sensores : MonoBehaviour {
     private void FixedUpdate()
     {
         RaycastHit hit;
-        //transform.TransformDirection
-        if (Physics.Raycast(transform.position, (Vector3.forward), out hit, m_Range, m_LayerMask))
+     
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, m_Range, m_LayerMask))
         {
             m_Range = hit.distance;
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * m_Range, m_CollisionRayColor);
