@@ -1,13 +1,20 @@
 #include "GravityCar.h"
 
-GravityCar::GravityCar(int leftBrakePin, int rightBrakePin, int steeringAnglePin) {
+GravityCar::GravityCar(int leftBrakePin, int rightBrakePin, int steeringAnglePin, int leftMotorPin, int rightMotorPin) {
   pinMode(leftBrakePin, INPUT);
   pinMode(rightBrakePin, INPUT);
   pinMode(steeringAnglePin, INPUT);
 
+  pinMode(leftMotorPin, OUTPUT);
+  pinMode(rightMotorPin, OUTPUT);
+  
+
   mLeftBrakePin = leftBrakePin;
   mRightBrakePin = rightBrakePin;
   mSteeringAnglePin = steeringAnglePin;
+
+  mLeftMotorPin = leftMotorPin;
+  mRightMotorPin = rightMotorPin;
 }
 
 void GravityCar::calibrate(int steps){

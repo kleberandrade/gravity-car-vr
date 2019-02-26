@@ -52,4 +52,6 @@ public class StatisticsTracker {
     public double getAverage() {
         return mTotal / (double)mCount;
     }
+    
+    
 }

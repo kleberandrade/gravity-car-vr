@@ -81,6 +81,7 @@ public final class Arduino implements SerialPortDataListener {
 
         checkCommandBuffer();
     }
+    
 
     private void checkCommandBuffer() {
         String commands = mBuffer.toString();
@@ -98,4 +99,15 @@ public final class Arduino implements SerialPortDataListener {
             }
         }
     }
+    
+    public void sendVibrationMotor(SerialPortEvent event){
+        if (event.getEventType() != SerialPort.LISTENING_EVENT_DATA_AVAILABLE) {
+            return;
+            
+            
+        }
+        
+        
+    }
+    
 }

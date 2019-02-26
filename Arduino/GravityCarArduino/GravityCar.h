@@ -13,9 +13,12 @@
 #define JSON_RIGHT_BRAKE_TAG      "rightbrake"
 #define JSON_STEERING_ANGLE_TAG   "steeringangle"
 
+#define JSON_LEFT_MOTOR_TAG       "leftmotor"
+#define JSON_RIGHT_MOTOR_TAG      "rightmotor"
+
 class GravityCar {
   public:
-    GravityCar(int leftBrakePin, int rightBrakePin, int steeringAnglePin);
+    GravityCar(int leftBrakePin, int rightBrakePin, int steeringAnglePin, int leftMotorPin, int rightMotorPin);
 
     void calibrate(int steps);
 
@@ -25,11 +28,17 @@ class GravityCar {
     int getLeftBrake() const { return analogRead(mLeftBrakePin); }
     int getRightBrake() const { return analogRead(mRightBrakePin); }
     int getSteeringAngle() const { return analogRead(mSteeringAnglePin); }
+   
+    int setLeftMotor() const {return analogWrite(mLeftMotorPin);}
+    int setRightMotor() const {return analogWrite(mRightMotorPin);}
 
   private:
     int mLeftBrakePin;
     int mRightBrakePin;
     int mSteeringAnglePin;
+
+    int mLeftMotorPin;
+    int mRightMotorPin;
 
     int mLeftBrakeOffset;
     int mRightBrakeOffset;
