@@ -23,7 +23,10 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
     private RealTimeLineChart mLeftBrakeChart;
     private RealTimeLineChart mRightBrakeChart;
     private RealTimeLineChart mSteeringAngleChart;
-
+    
+    private int mLeftMotor;
+    private int mRightMotor;
+    
     private Timer mTimer;
 
     public MonitorFrame() {
@@ -52,11 +55,15 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         mTimer.start();
     }
 
-    public void updateChart(double x, double y, RealTimeLineChart chart, JTextField min, JTextField max, JTextField avg) {
-        chart.addSeries(x, y, MAX_ITEM_COUNTS);
-        min.setText(String.format("%.1f", chart.getMinimum()));
-        max.setText(String.format("%.1f", chart.getMaximum()));
-        avg.setText(String.format("%.1f", chart.getAverage()));
+    public void updateChart(double x, double y, RealTimeLineChart chart, JTextField min, JTextField max, JTextField avg, JTextField current, JTextField movingAvg) {
+        chart.addSeries(x, y,MAX_ITEM_COUNTS);
+       
+        min.setText(String.format("%.0f", chart.getMinimum()));
+        max.setText(String.format("%.0f", chart.getMaximum()));
+        avg.setText(String.format("%.0f", chart.getAverage()));
+        current.setText(String.format("%.0f", y));
+        movingAvg.setText(String.format("%.0f", chart.getMovingAverage(Double.parseDouble(current.getText()))));
+
     }
 
     @SuppressWarnings("unchecked")
@@ -86,7 +93,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         jPanel12 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        mReceiveMessageRawTextArea1 = new javax.swing.JTextArea();
+        mSendMessageRawTextArea = new javax.swing.JTextArea();
         mRightVibrationMotorSlider = new javax.swing.JSlider();
         mLeftVibrationMotorSlider = new javax.swing.JSlider();
         jLabel14 = new javax.swing.JLabel();
@@ -103,6 +110,10 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         jLabel6 = new javax.swing.JLabel();
         mMaxLeftBrakeTextField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        mCurrentLeftBrakeTextField = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        mMovingAvgLeftBrakeTextField = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         mRightBrakeLineChartPanel = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
@@ -110,8 +121,12 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         mMinRightBrakeTextField = new javax.swing.JTextField();
         mAvgRightBrakeTextField = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        mMaxRightBrakeTextField = new javax.swing.JTextField();
+        mCurrentRightBrakeTextField = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        mMaxRightBrakeTextField = new javax.swing.JTextField();
+        mMovingAvgRightBrakeTextField = new javax.swing.JTextField();
+        jLabel27 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         mSteeringAngleLineChartPanel = new javax.swing.JPanel();
         jPanel17 = new javax.swing.JPanel();
@@ -121,10 +136,14 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         jLabel24 = new javax.swing.JLabel();
         mMaxSteeringAngleTextField = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
+        mCurrentSteeringAngleTextField = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        mMovingAvgSteeringAngleTextField = new javax.swing.JTextField();
+        jLabel28 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gravity Car VR Telemetry Viewer");
-        setMinimumSize(new java.awt.Dimension(1214, 846));
+        setMinimumSize(new java.awt.Dimension(1230, 665));
 
         jPanel1.setBackground(new java.awt.Color(236, 240, 241));
 
@@ -280,7 +299,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
                 .addContainerGap()
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -313,16 +332,16 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel13.setText("Send Message (Raw)");
 
-        mReceiveMessageRawTextArea1.setEditable(false);
-        mReceiveMessageRawTextArea1.setColumns(20);
-        mReceiveMessageRawTextArea1.setRows(5);
-        mReceiveMessageRawTextArea1.setWrapStyleWord(true);
-        jScrollPane2.setViewportView(mReceiveMessageRawTextArea1);
+        mSendMessageRawTextArea.setEditable(false);
+        mSendMessageRawTextArea.setColumns(20);
+        mSendMessageRawTextArea.setRows(5);
+        mSendMessageRawTextArea.setWrapStyleWord(true);
+        jScrollPane2.setViewportView(mSendMessageRawTextArea);
 
-        mRightVibrationMotorSlider.setMaximum(1023);
+        mRightVibrationMotorSlider.setMaximum(255);
         mRightVibrationMotorSlider.setValue(0);
 
-        mLeftVibrationMotorSlider.setMaximum(1023);
+        mLeftVibrationMotorSlider.setMaximum(255);
         mLeftVibrationMotorSlider.setValue(0);
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -372,7 +391,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
                 .addContainerGap()
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -422,7 +441,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         mLeftBrakeLineChartPanel.setLayout(mLeftBrakeLineChartPanelLayout);
         mLeftBrakeLineChartPanelLayout.setHorizontalGroup(
             mLeftBrakeLineChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 744, Short.MAX_VALUE)
+            .addGap(0, 720, Short.MAX_VALUE)
         );
         mLeftBrakeLineChartPanelLayout.setVerticalGroup(
             mLeftBrakeLineChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -436,57 +455,93 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         jLabel5.setText("Minimum");
 
         mMinLeftBrakeTextField.setEditable(false);
-        mMinLeftBrakeTextField.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        mMinLeftBrakeTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         mMinLeftBrakeTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         mAvgLeftBrakeTextField.setEditable(false);
-        mAvgLeftBrakeTextField.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        mAvgLeftBrakeTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         mAvgLeftBrakeTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel6.setText("Average");
 
         mMaxLeftBrakeTextField.setEditable(false);
-        mMaxLeftBrakeTextField.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        mMaxLeftBrakeTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         mMaxLeftBrakeTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel7.setText("Maximum");
+
+        mCurrentLeftBrakeTextField.setEditable(false);
+        mCurrentLeftBrakeTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        mCurrentLeftBrakeTextField.setForeground(new java.awt.Color(41, 128, 185));
+        mCurrentLeftBrakeTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel19.setText("Current ");
+
+        jLabel26.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel26.setText("Moving Average");
+
+        mMovingAvgLeftBrakeTextField.setEditable(false);
+        mMovingAvgLeftBrakeTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        mMovingAvgLeftBrakeTextField.setForeground(new java.awt.Color(231, 76, 6));
+        mMovingAvgLeftBrakeTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mMinLeftBrakeTextField)
-                    .addComponent(mAvgLeftBrakeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .addComponent(mMaxLeftBrakeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addContainerGap()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(mMaxLeftBrakeTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
+                                        .addComponent(mMinLeftBrakeTextField, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addComponent(jLabel5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(mAvgLeftBrakeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(mCurrentLeftBrakeTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(mMovingAvgLeftBrakeTextField)))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel26)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mMinLeftBrakeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mMinLeftBrakeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mAvgLeftBrakeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mMaxLeftBrakeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mCurrentLeftBrakeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
+                .addComponent(jLabel26)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mAvgLeftBrakeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mMaxLeftBrakeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(mMovingAvgLeftBrakeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -521,7 +576,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         mRightBrakeLineChartPanel.setLayout(mRightBrakeLineChartPanelLayout);
         mRightBrakeLineChartPanelLayout.setHorizontalGroup(
             mRightBrakeLineChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 744, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
         mRightBrakeLineChartPanelLayout.setVerticalGroup(
             mRightBrakeLineChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -535,22 +590,38 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         jLabel8.setText("Minimum");
 
         mMinRightBrakeTextField.setEditable(false);
-        mMinRightBrakeTextField.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        mMinRightBrakeTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         mMinRightBrakeTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         mAvgRightBrakeTextField.setEditable(false);
-        mAvgRightBrakeTextField.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        mAvgRightBrakeTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         mAvgRightBrakeTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel9.setText("Average");
 
-        mMaxRightBrakeTextField.setEditable(false);
-        mMaxRightBrakeTextField.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        mMaxRightBrakeTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        mCurrentRightBrakeTextField.setEditable(false);
+        mCurrentRightBrakeTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        mCurrentRightBrakeTextField.setForeground(new java.awt.Color(41, 128, 185));
+        mCurrentRightBrakeTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel10.setText("Maximum");
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel18.setText("Current ");
+
+        mMaxRightBrakeTextField.setEditable(false);
+        mMaxRightBrakeTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        mMaxRightBrakeTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        mMovingAvgRightBrakeTextField.setEditable(false);
+        mMovingAvgRightBrakeTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        mMovingAvgRightBrakeTextField.setForeground(new java.awt.Color(231, 76, 6));
+        mMovingAvgRightBrakeTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        jLabel27.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel27.setText("Moving Average");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -559,33 +630,56 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mMinRightBrakeTextField)
-                    .addComponent(mAvgRightBrakeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .addComponent(mMaxRightBrakeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(mMaxRightBrakeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(mCurrentRightBrakeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel18))
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(mMinRightBrakeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(mAvgRightBrakeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel9)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(mMovingAvgRightBrakeTextField))
                 .addContainerGap())
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(jLabel27)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel8)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mMinRightBrakeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mMinRightBrakeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mAvgRightBrakeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel18)
+                    .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mMaxRightBrakeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mCurrentRightBrakeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mAvgRightBrakeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                .addComponent(jLabel27)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mMaxRightBrakeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(mMovingAvgRightBrakeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -620,7 +714,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         mSteeringAngleLineChartPanel.setLayout(mSteeringAngleLineChartPanelLayout);
         mSteeringAngleLineChartPanelLayout.setHorizontalGroup(
             mSteeringAngleLineChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 744, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
         mSteeringAngleLineChartPanelLayout.setVerticalGroup(
             mSteeringAngleLineChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -634,22 +728,38 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         jLabel23.setText("Minimum");
 
         mMinSteeringAngleTextField.setEditable(false);
-        mMinSteeringAngleTextField.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        mMinSteeringAngleTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         mMinSteeringAngleTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         mAvgSteeringAngleTextField.setEditable(false);
-        mAvgSteeringAngleTextField.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        mAvgSteeringAngleTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         mAvgSteeringAngleTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel24.setText("Average");
 
         mMaxSteeringAngleTextField.setEditable(false);
-        mMaxSteeringAngleTextField.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        mMaxSteeringAngleTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         mMaxSteeringAngleTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel25.setText("Maximum");
+
+        mCurrentSteeringAngleTextField.setEditable(false);
+        mCurrentSteeringAngleTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        mCurrentSteeringAngleTextField.setForeground(new java.awt.Color(41, 128, 185));
+        mCurrentSteeringAngleTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel20.setText("Current ");
+
+        mMovingAvgSteeringAngleTextField.setEditable(false);
+        mMovingAvgSteeringAngleTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        mMovingAvgSteeringAngleTextField.setForeground(new java.awt.Color(231, 76, 6));
+        mMovingAvgSteeringAngleTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        jLabel28.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel28.setText("Moving Average");
 
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
         jPanel17.setLayout(jPanel17Layout);
@@ -658,33 +768,56 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mMinSteeringAngleTextField)
-                    .addComponent(mAvgSteeringAngleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .addComponent(mMaxSteeringAngleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                    .addGroup(jPanel17Layout.createSequentialGroup()
+                        .addComponent(mMaxSteeringAngleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(mCurrentSteeringAngleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel17Layout.createSequentialGroup()
                         .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel23)
-                            .addComponent(jLabel24)
-                            .addComponent(jLabel25))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGroup(jPanel17Layout.createSequentialGroup()
+                                .addComponent(jLabel25)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel20))
+                            .addGroup(jPanel17Layout.createSequentialGroup()
+                                .addComponent(jLabel23)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel24))
+                            .addGroup(jPanel17Layout.createSequentialGroup()
+                                .addComponent(mMinSteeringAngleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(mAvgSteeringAngleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(mMovingAvgSteeringAngleTextField))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel17Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel28)
+                .addGap(26, 26, 26))
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel23)
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel23)
+                    .addComponent(jLabel24))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mMinSteeringAngleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mMinSteeringAngleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mAvgSteeringAngleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel20)
+                    .addComponent(jLabel25))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel24)
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mMaxSteeringAngleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mCurrentSteeringAngleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mAvgSteeringAngleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                .addComponent(jLabel28)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel25)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mMaxSteeringAngleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(mMovingAvgSteeringAngleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
@@ -728,7 +861,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addContainerGap())))
         );
 
@@ -745,7 +878,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
 
         bindingGroup.bind();
 
-        setSize(new java.awt.Dimension(1230, 885));
+        setSize(new java.awt.Dimension(1230, 665));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -774,31 +907,49 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
         try {
             while (!mArduino.isEmpty()) {
                 GravityCarPackage gravityCar = mArduino.remove();
-
-                updateChart(gravityCar.getmMillis() / 1000.0,
+                
+                  updateChart(gravityCar.getmMillis() / 1000.0,
                         gravityCar.getmLeftBrake(),
                         mLeftBrakeChart,
                         mMinLeftBrakeTextField,
                         mMaxLeftBrakeTextField,
-                        mAvgLeftBrakeTextField);
+                        mAvgLeftBrakeTextField,
+                        mCurrentLeftBrakeTextField,
+                        mMovingAvgLeftBrakeTextField);
 
                 updateChart(gravityCar.getmMillis() / 1000.0,
                         gravityCar.getmRightBrake(),
                         mRightBrakeChart,
                         mMinRightBrakeTextField,
                         mMaxRightBrakeTextField,
-                        mAvgRightBrakeTextField);
+                        mAvgRightBrakeTextField,
+                        mCurrentRightBrakeTextField,
+                        mMovingAvgRightBrakeTextField);
 
                 updateChart(gravityCar.getmMillis() / 1000.0,
                         gravityCar.getmSteeringAngle(),
                         mSteeringAngleChart,
                         mMinSteeringAngleTextField,
                         mMaxSteeringAngleTextField,
-                        mAvgSteeringAngleTextField);
+                        mAvgSteeringAngleTextField,
+                        mCurrentSteeringAngleTextField,
+                        mMovingAvgSteeringAngleTextField);
+
+                mReceiveMessageRawTextArea.setText("\nLeft Brake:" + gravityCar.getmLeftBrake()
+                        + "; Right Brake: " + gravityCar.getmRightBrake()
+                        + "; Steering Angle: " + gravityCar.getmSteeringAngle());
+
+                mSendMessageRawTextArea.setText("\nLeft Vibration Motor:" + mLeftVibrationMotorSlider.getValue()
+                        + "; Right Vibration Motor: " + mRightVibrationMotorSlider.getValue() + ";");
+                
+                mArduino.createJSON(mLeftVibrationMotorSlider.getValue(), mRightVibrationMotorSlider.getValue());
+
             }
+
         } catch (InterruptedException ex) {
             System.out.println(ex.getMessage());
         }
@@ -812,7 +963,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -832,6 +983,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MonitorFrame().setVisible(true);
+
             }
         });
     }
@@ -846,10 +998,16 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -877,6 +1035,9 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JTextField mAvgSteeringAngleTextField;
     private javax.swing.JComboBox<String> mBaudRateComboBox;
     private javax.swing.JButton mConnectButton;
+    private javax.swing.JTextField mCurrentLeftBrakeTextField;
+    private javax.swing.JTextField mCurrentRightBrakeTextField;
+    private javax.swing.JTextField mCurrentSteeringAngleTextField;
     private javax.swing.JButton mDisconnectButton;
     private javax.swing.JPanel mLeftBrakeLineChartPanel;
     private javax.swing.JSlider mLeftVibrationMotorSlider;
@@ -886,14 +1047,18 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JTextField mMinLeftBrakeTextField;
     private javax.swing.JTextField mMinRightBrakeTextField;
     private javax.swing.JTextField mMinSteeringAngleTextField;
+    private javax.swing.JTextField mMovingAvgLeftBrakeTextField;
+    private javax.swing.JTextField mMovingAvgRightBrakeTextField;
+    private javax.swing.JTextField mMovingAvgSteeringAngleTextField;
     private javax.swing.JPanel mReceiveLedPanel;
     private javax.swing.JTextArea mReceiveMessageRawTextArea;
-    private javax.swing.JTextArea mReceiveMessageRawTextArea1;
     private javax.swing.JPanel mRightBrakeLineChartPanel;
     private javax.swing.JSlider mRightVibrationMotorSlider;
+    private javax.swing.JTextArea mSendMessageRawTextArea;
     private javax.swing.JComboBox<String> mSerialPortComboBox;
     private javax.swing.JPanel mSteeringAngleLineChartPanel;
     private javax.swing.JPanel mTransmitLedPanel;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
+
 }
