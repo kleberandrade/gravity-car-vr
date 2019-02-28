@@ -16,6 +16,9 @@ public final class Arduino implements SerialPortDataListener {
     private static final String JSON_RIGHT_BRAKE = "rightbrake";
     private static final String JSON_STEERING_ANGLE = "steeringangle";
 
+    private static final String JSON_LEFT_MOTOR = "leftmotor";
+    private static final String JSON_RIGHT_MOTOR = "rightmotor";
+
     private SerialPort mSerialPort = null;
 
     private volatile StringBuilder mBuffer = new StringBuilder();
@@ -81,7 +84,6 @@ public final class Arduino implements SerialPortDataListener {
 
         checkCommandBuffer();
     }
-    
 
     private void checkCommandBuffer() {
         String commands = mBuffer.toString();
@@ -99,15 +101,22 @@ public final class Arduino implements SerialPortDataListener {
             }
         }
     }
-    
-    public void sendVibrationMotor(SerialPortEvent event){
+
+    public void sendVibrationMotor(SerialPortEvent event) {
         if (event.getEventType() != SerialPort.LISTENING_EVENT_DATA_AVAILABLE) {
             return;
-            
-            
         }
-        
-        
+
     }
-    
+
+    public String createJSON(int leftMotor, int rightMotor) {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put(JSON_LEFT_MOTOR, leftMotor);
+        jsonObject.put(JSON_RIGHT_MOTOR, rightMotor);
+
+        return jsonObject.toString();
+        //System.out.println(jsonString);
+    }
+
 }

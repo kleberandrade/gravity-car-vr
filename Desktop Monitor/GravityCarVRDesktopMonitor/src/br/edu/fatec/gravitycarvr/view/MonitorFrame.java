@@ -23,7 +23,10 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
     private RealTimeLineChart mLeftBrakeChart;
     private RealTimeLineChart mRightBrakeChart;
     private RealTimeLineChart mSteeringAngleChart;
-
+    
+    private int mLeftMotor;
+    private int mRightMotor;
+    
     private Timer mTimer;
 
     public MonitorFrame() {
@@ -471,6 +474,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
 
         mCurrentLeftBrakeTextField.setEditable(false);
         mCurrentLeftBrakeTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        mCurrentLeftBrakeTextField.setForeground(new java.awt.Color(41, 128, 185));
         mCurrentLeftBrakeTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -481,6 +485,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
 
         mMovingAvgLeftBrakeTextField.setEditable(false);
         mMovingAvgLeftBrakeTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        mMovingAvgLeftBrakeTextField.setForeground(new java.awt.Color(231, 76, 6));
         mMovingAvgLeftBrakeTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -597,6 +602,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
 
         mCurrentRightBrakeTextField.setEditable(false);
         mCurrentRightBrakeTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        mCurrentRightBrakeTextField.setForeground(new java.awt.Color(41, 128, 185));
         mCurrentRightBrakeTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -611,6 +617,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
 
         mMovingAvgRightBrakeTextField.setEditable(false);
         mMovingAvgRightBrakeTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        mMovingAvgRightBrakeTextField.setForeground(new java.awt.Color(231, 76, 6));
         mMovingAvgRightBrakeTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -740,6 +747,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
 
         mCurrentSteeringAngleTextField.setEditable(false);
         mCurrentSteeringAngleTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        mCurrentSteeringAngleTextField.setForeground(new java.awt.Color(41, 128, 185));
         mCurrentSteeringAngleTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -747,6 +755,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
 
         mMovingAvgSteeringAngleTextField.setEditable(false);
         mMovingAvgSteeringAngleTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        mMovingAvgSteeringAngleTextField.setForeground(new java.awt.Color(231, 76, 6));
         mMovingAvgSteeringAngleTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel28.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -902,8 +911,8 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         try {
             while (!mArduino.isEmpty()) {
                 GravityCarPackage gravityCar = mArduino.remove();
-
-                updateChart(gravityCar.getmMillis() / 1000.0,
+                
+                  updateChart(gravityCar.getmMillis() / 1000.0,
                         gravityCar.getmLeftBrake(),
                         mLeftBrakeChart,
                         mMinLeftBrakeTextField,
@@ -936,6 +945,8 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
 
                 mSendMessageRawTextArea.setText("\nLeft Vibration Motor:" + mLeftVibrationMotorSlider.getValue()
                         + "; Right Vibration Motor: " + mRightVibrationMotorSlider.getValue() + ";");
+                
+                mArduino.createJSON(mLeftVibrationMotorSlider.getValue(), mRightVibrationMotorSlider.getValue());
 
             }
 

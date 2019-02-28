@@ -21,7 +21,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class RealTimeLineChart {
     
-    private static final int MOVING_AVERAGE = 100;
+    private static final int MOVING_AVERAGE = 20;
 
     private final XYSeries mSeries = new XYSeries("Series");
     private final XYSeries mSeriesAvg = new XYSeries("Moving Average");
