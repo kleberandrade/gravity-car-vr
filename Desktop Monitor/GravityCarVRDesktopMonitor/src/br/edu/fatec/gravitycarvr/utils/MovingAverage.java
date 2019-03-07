@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.fatec.gravitycarvr.models;
+package br.edu.fatec.gravitycarvr.utils;
 
 import java.util.LinkedList;
 import java.util.Queue;

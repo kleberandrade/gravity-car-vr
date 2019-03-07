@@ -1,10 +1,13 @@
 package br.edu.fatec.gravitycarvr.communication;
 
 import br.edu.fatec.gravitycarvr.json.JSONObject;
+import br.edu.fatec.gravitycarvr.models.ControlPackage;
 import br.edu.fatec.gravitycarvr.models.GravityCarPackage;
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortDataListener;
 import com.fazecast.jSerialComm.SerialPortEvent;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -23,7 +26,15 @@ public final class Arduino implements SerialPortDataListener {
 
     private volatile StringBuilder mBuffer = new StringBuilder();
 
-    private BlockingQueue<GravityCarPackage> mQueue = new ArrayBlockingQueue<>(QUEUE_SIZE);
+    private BlockingQueue<GravityCarPackage> mReceiveQueue = new ArrayBlockingQueue<>(QUEUE_SIZE);
+
+    private boolean isConnected;
+
+    private OutputStream mOutputStream;
+
+    public boolean isConnected() {
+        return isConnected;
+    }
 
     public boolean connect(String port, int baudRate) {
 
@@ -33,11 +44,14 @@ public final class Arduino implements SerialPortDataListener {
 
         if (mSerialPort.openPort()) {
             mSerialPort.addDataListener(this);
-            return true;
+            mOutputStream = mSerialPort.getOutputStream();
+            isConnected = true;
         } else {
             disconnect();
-            return false;
+            isConnected = false;
         }
+
+        return isConnected;
     }
 
     public synchronized void disconnect() {
@@ -47,12 +61,12 @@ public final class Arduino implements SerialPortDataListener {
         }
     }
 
-    public synchronized boolean isEmpty() {
-        return mQueue.isEmpty();
+    public synchronized boolean isEmptyGravityCarPackage() {
+        return mReceiveQueue.isEmpty();
     }
 
-    public GravityCarPackage remove() throws InterruptedException {
-        return mQueue.take();
+    public GravityCarPackage removeGravityCarPackage() throws InterruptedException {
+        return mReceiveQueue.take();
     }
 
     public synchronized GravityCarPackage fromJson(String json) {
@@ -97,26 +111,25 @@ public final class Arduino implements SerialPortDataListener {
 
             GravityCarPackage gravityCar = fromJson(command);
             if (gravityCar != null) {
-                mQueue.add(gravityCar);
+                mReceiveQueue.add(gravityCar);
             }
         }
     }
 
-    public void sendVibrationMotor(SerialPortEvent event) {
-        if (event.getEventType() != SerialPort.LISTENING_EVENT_DATA_AVAILABLE) {
-            return;
-        }
-
-    }
-
-    public String createJSON(int leftMotor, int rightMotor) {
+    public synchronized void write(ControlPackage controlPackage) {
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put(JSON_LEFT_MOTOR, leftMotor);
-        jsonObject.put(JSON_RIGHT_MOTOR, rightMotor);
+        jsonObject.put(JSON_LEFT_MOTOR, controlPackage.getLeftVibrationMotor());
+        jsonObject.put(JSON_RIGHT_MOTOR, controlPackage.getRightVibrationMotor());
 
-        return jsonObject.toString();
-        //System.out.println(jsonString);
+        if (!isConnected())
+            return;
+        
+        try {
+            mOutputStream.write(jsonObject.toString().getBytes());
+            mOutputStream.flush();
+        } catch (IOException ex) {
+            System.out.println("[WRITE]" + ex.getMessage());
+        }
     }
-
 }

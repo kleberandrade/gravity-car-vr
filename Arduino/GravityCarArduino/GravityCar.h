@@ -28,9 +28,14 @@ class GravityCar {
     int getLeftBrake() const { return analogRead(mLeftBrakePin); }
     int getRightBrake() const { return analogRead(mRightBrakePin); }
     int getSteeringAngle() const { return analogRead(mSteeringAnglePin); }
-   
-    int setLeftMotor() const {return analogWrite(mLeftMotorPin);}
-    int setRightMotor() const {return analogWrite(mRightMotorPin);}
+
+    int getLeftMotor() const { return mLeftMotor; }
+    int getRightMotor() const { return mRightMotor; }
+
+    String getIncomingCommand() const { return incomingCommand; }
+
+    void setLeftMotor(int leftMotor);
+    void setRightMotor(int rightMotor);
 
   private:
     int mLeftBrakePin;
@@ -43,6 +48,11 @@ class GravityCar {
     int mLeftBrakeOffset;
     int mRightBrakeOffset;
     int mSteeringAngleOffset;
+
+    int mLeftMotor;
+    int mRightMotor;
+
+    String incomingCommand;
 };
 
 #endif  /* __GRAVITY_CAR_H__ */

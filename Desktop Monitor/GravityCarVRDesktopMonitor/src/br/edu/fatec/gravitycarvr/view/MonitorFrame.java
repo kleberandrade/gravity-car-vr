@@ -2,6 +2,7 @@ package br.edu.fatec.gravitycarvr.view;
 
 import br.edu.fatec.gravitycarvr.chart.RealTimeLineChart;
 import br.edu.fatec.gravitycarvr.communication.Arduino;
+import br.edu.fatec.gravitycarvr.models.ControlPackage;
 import br.edu.fatec.gravitycarvr.models.GravityCarPackage;
 import com.fazecast.jSerialComm.SerialPort;
 import java.awt.event.ActionEvent;
@@ -23,11 +24,10 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
     private RealTimeLineChart mLeftBrakeChart;
     private RealTimeLineChart mRightBrakeChart;
     private RealTimeLineChart mSteeringAngleChart;
-    
-    private int mLeftMotor;
-    private int mRightMotor;
-    
+
     private Timer mTimer;
+
+    private ControlPackage mControlPackage = new ControlPackage();
 
     public MonitorFrame() {
         initComponents();
@@ -56,8 +56,8 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
     }
 
     public void updateChart(double x, double y, RealTimeLineChart chart, JTextField min, JTextField max, JTextField avg, JTextField current, JTextField movingAvg) {
-        chart.addSeries(x, y,MAX_ITEM_COUNTS);
-       
+        chart.addSeries(x, y, MAX_ITEM_COUNTS);
+
         min.setText(String.format("%.0f", chart.getMinimum()));
         max.setText(String.format("%.0f", chart.getMaximum()));
         avg.setText(String.format("%.0f", chart.getAverage()));
@@ -299,7 +299,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
                 .addContainerGap()
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -441,7 +441,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
         mLeftBrakeLineChartPanel.setLayout(mLeftBrakeLineChartPanelLayout);
         mLeftBrakeLineChartPanelLayout.setHorizontalGroup(
             mLeftBrakeLineChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 728, Short.MAX_VALUE)
         );
         mLeftBrakeLineChartPanelLayout.setVerticalGroup(
             mLeftBrakeLineChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -516,7 +516,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addComponent(jLabel26)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -541,7 +541,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
                 .addComponent(jLabel26)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mMovingAvgLeftBrakeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -559,7 +559,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(mLeftBrakeLineChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -861,7 +861,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE)
                         .addContainerGap())))
         );
 
@@ -878,7 +878,7 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
 
         bindingGroup.bind();
 
-        setSize(new java.awt.Dimension(1230, 665));
+        setSize(new java.awt.Dimension(1230, 704));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -909,10 +909,11 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         try {
-            while (!mArduino.isEmpty()) {
-                GravityCarPackage gravityCar = mArduino.remove();
-                
-                  updateChart(gravityCar.getmMillis() / 1000.0,
+            if (!mArduino.isEmptyGravityCarPackage()) {
+
+                GravityCarPackage gravityCar = mArduino.removeGravityCarPackage();
+
+                updateChart(gravityCar.getmMillis() / 1000.0,
                         gravityCar.getmLeftBrake(),
                         mLeftBrakeChart,
                         mMinLeftBrakeTextField,
@@ -940,15 +941,16 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
                         mMovingAvgSteeringAngleTextField);
 
                 mReceiveMessageRawTextArea.setText("\nLeft Brake:" + gravityCar.getmLeftBrake()
-                        + "; Right Brake: " + gravityCar.getmRightBrake()
-                        + "; Steering Angle: " + gravityCar.getmSteeringAngle());
+                        + "\nRight Brake: " + gravityCar.getmRightBrake()
+                        + "\nSteering Angle: " + gravityCar.getmSteeringAngle());
 
-                mSendMessageRawTextArea.setText("\nLeft Vibration Motor:" + mLeftVibrationMotorSlider.getValue()
-                        + "; Right Vibration Motor: " + mRightVibrationMotorSlider.getValue() + ";");
-                
-                mArduino.createJSON(mLeftVibrationMotorSlider.getValue(), mRightVibrationMotorSlider.getValue());
-
+                mSendMessageRawTextArea.setText("\nLeft Vibration Motor:" + mControlPackage.getLeftVibrationMotor()
+                        + "\nRight Vibration Motor: " + mControlPackage.getRightVibrationMotor() + ";");
             }
+
+            mControlPackage.setLeftVibrationMotor(mLeftVibrationMotorSlider.getValue());
+            mControlPackage.setRightVibrationMotor(mRightVibrationMotorSlider.getValue());
+            mArduino.write(mControlPackage);
 
         } catch (InterruptedException ex) {
             System.out.println(ex.getMessage());
@@ -1060,5 +1062,4 @@ public class MonitorFrame extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JPanel mTransmitLedPanel;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
-
 }

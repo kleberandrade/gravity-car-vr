@@ -1,6 +1,6 @@
 package br.edu.fatec.gravitycarvr.chart;
 
-import br.edu.fatec.gravitycarvr.models.MovingAverage;
+import br.edu.fatec.gravitycarvr.utils.MovingAverage;
 import br.edu.fatec.gravitycarvr.utils.StatisticsTracker;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;

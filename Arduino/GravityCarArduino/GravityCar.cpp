@@ -7,7 +7,6 @@ GravityCar::GravityCar(int leftBrakePin, int rightBrakePin, int steeringAnglePin
 
   pinMode(leftMotorPin, OUTPUT);
   pinMode(rightMotorPin, OUTPUT);
-  
 
   mLeftBrakePin = leftBrakePin;
   mRightBrakePin = rightBrakePin;
@@ -15,16 +14,31 @@ GravityCar::GravityCar(int leftBrakePin, int rightBrakePin, int steeringAnglePin
 
   mLeftMotorPin = leftMotorPin;
   mRightMotorPin = rightMotorPin;
+
+  setRightMotor(0);
+  setLeftMotor(0);
+
+  incomingCommand = "";
 }
 
-void GravityCar::calibrate(int steps){
+void GravityCar::setLeftMotor(int leftMotor) {
+  mLeftMotor = leftMotor;
+  analogWrite(mLeftMotorPin, leftMotor);
+}
+
+void GravityCar::setRightMotor(int rightMotor) {
+  mRightMotor = rightMotor;
+  analogWrite(mRightMotorPin, rightMotor);
+}
+
+void GravityCar::calibrate(int steps) {
   int step;
-  for (step = 0; step < steps; step++){
-    
+  for (step = 0; step < steps; step++) {
+
   }
 }
 
-void GravityCar::writeSerialJson(void){
+void GravityCar::writeSerialJson(void) {
   StaticJsonBuffer<JSON_BUFFER_SIZE> jsonBuffer;
   JsonObject& object = jsonBuffer.createObject();
   object[JSON_LEFT_BRAKE_TAG] = getLeftBrake();
@@ -35,6 +49,25 @@ void GravityCar::writeSerialJson(void){
   Serial.flush();
 }
 
-void GravityCar::readSerialJson(void){
-  
+void GravityCar::readSerialJson(void) {
+  while (Serial.available() > 0) {
+    char command = Serial.read();
+    incomingCommand += command;
+
+    if (command == '}') {
+
+      DynamicJsonBuffer jsonBuffer;
+      JsonObject& root = jsonBuffer.parseObject(incomingCommand);
+
+      if (!root.success()) {
+        incomingCommand = "";
+        return;
+      }
+
+      setLeftMotor(root[JSON_LEFT_MOTOR_TAG]);
+      setRightMotor(root[JSON_RIGHT_MOTOR_TAG]);
+
+      incomingCommand = "";
+    }
+  }
 }

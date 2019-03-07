@@ -15,15 +15,23 @@ Simulador imersivo de carrinho de rolimã
 
 ## Configurações
 
-### Arduino (Instalar biblioteca ArduinoJson)
+### Arduino 
 
-* Abrir o menu Sketch -> Incluir Bibliotecas -> Gerenciar Bibliotecas
-* Procurar a biblioteca "ArduinoJson"
-* Instalar a versão 5.13.3
+#### Instalar biblioteca ArduinoJson
 
+- Abrir o menu Sketch -> Incluir Bibliotecas -> Gerenciar Bibliotecas
+- Procurar a biblioteca "ArduinoJson"
+- Instalar a versão 5.13.3
 
-Créditos
-----
+#### Instalar biblioteca OLED
+
+- Abrir o menu Sketch -> Incluir Bibliotecas -> Gerenciar Bibliotecas
+- Procurar a biblioteca "Adafruit GFX Library"
+- Instalar a versão 1.4.2
+- Procurar a biblioteca "Adafruit SSD1306"
+- Instalar a versão 1.2.9
+
+## Créditos
 
 - Bruno Cardoso Ambrosio
 - Fernando Daniel Muniz
