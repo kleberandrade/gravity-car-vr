@@ -34,7 +34,7 @@ Simulador imersivo de carrinho de rolimã
 ## Esquemático elétrico
 
 <p align="center">
-  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Screenshots/esquematico.png" height="500"/>
+  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/esquematico.png" height="500"/>
 </p>
 
 ## Créditos
