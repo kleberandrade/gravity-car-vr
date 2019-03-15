@@ -1,5 +1,5 @@
 <p align="left">
-  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/logotipo.png" height="150"/>
+  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/logotipo.PNG" height="150"/>
 </p>
 
 Simulador imersivo de carrinho de rolimã
@@ -48,7 +48,7 @@ Simulador imersivo de carrinho de rolimã
 ## Esquemático mecânico
 
 <p align="center">
-  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/hardware.png" height="500"/>
+  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/hardware.PNG" height="500"/>
 </p>
 
 
