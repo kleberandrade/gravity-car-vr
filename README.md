@@ -4,6 +4,18 @@
 
 Simulador imersivo de carrinho de rolimã
 
+## Esquemático mecânico
+
+<p align="center">
+  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/hardware.PNG" height="500"/>
+</p>
+
+## Software de telemetria
+
+<p align="center">
+  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/sistema.jpeg" height="500"/>
+</p>
+
 ## Esquemático elétrico
 
 | Componente eletrônico     | Quantidade | Valor Unitário | Valor Total |
@@ -15,18 +27,6 @@ Simulador imersivo de carrinho de rolimã
 
 <p align="center">
   <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/esquematico.png" height="500"/>
-</p>
-
-## Software de telemetria
-
-<p align="center">
-  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/sistema.jpeg" height="500"/>
-</p>
-
-## Esquemático mecânico
-
-<p align="center">
-  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/hardware.PNG" height="500"/>
 </p>
 
 ## Ferramentas Utilizadas
