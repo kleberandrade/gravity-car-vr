@@ -6,6 +6,13 @@ Simulador imersivo de carrinho de rolimã
 
 ## Esquemático elétrico
 
+| Componente eletrônico     | Quantidade | Valor Unitário | Valor Total |
+|---------------------------|:----------:|:--------------:|:-----------:|
+| Arduino Uno               |      1     |    R$ 45,90    |   R$ 45,90  |
+| Módulo Bluetooth HC-06    |      1     |    R$ 34,90    |   R$ 34,90  |
+| Potenciômetro Linear 200K |      3     |     R$ 1,20    |   R$ 3,60   |
+| Mini motor de vibração    |     12     |                |             |
+
 <p align="center">
   <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/esquematico.png" height="500"/>
 </p>
