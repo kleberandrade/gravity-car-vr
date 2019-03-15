@@ -1,5 +1,5 @@
 <p align="left">
-  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/logotipo.PNG" height="150"/>
+  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/logotipo.PNG" height="50"/>
 </p>
 
 Simulador imersivo de carrinho de rolimã
