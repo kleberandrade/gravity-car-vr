@@ -42,7 +42,7 @@ Simulador imersivo de carrinho de rolimã
 ## Software de telemetria
 
 <p align="center">
-  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/sistema.jpg" height="500"/>
+  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/sistema.jpeg" height="500"/>
 </p>
 
 ## Esquemático mecânico
