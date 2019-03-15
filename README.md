@@ -31,6 +31,12 @@ Simulador imersivo de carrinho de rolimã
 - Procurar a biblioteca "Adafruit SSD1306"
 - Instalar a versão 1.2.9
 
+## Esquemático elétrico
+
+<p align="center">
+  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Screenshots/esquematico.png" height="500"/>
+</p>
+
 ## Créditos
 
 - Bruno Cardoso Ambrosio
