@@ -1,4 +1,6 @@
-# Gravity Car VR
+<p align="left">
+  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/logotipo.png" height="150"/>
+</p>
 
 Simulador imersivo de carrinho de rolimã
 
@@ -36,6 +38,19 @@ Simulador imersivo de carrinho de rolimã
 <p align="center">
   <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/esquematico.png" height="500"/>
 </p>
+
+## Software de telemetria
+
+<p align="center">
+  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/sistema.png" height="500"/>
+</p>
+
+## Esquemático mecânico
+
+<p align="center">
+  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/hardware.png" height="500"/>
+</p>
+
 
 ## Créditos
 
