@@ -1,12 +1,13 @@
 #include "GravityCar.h"
 
-GravityCar::GravityCar(int leftBrakePin, int rightBrakePin, int steeringAnglePin, int leftMotorPin, int rightMotorPin) {
+GravityCar::GravityCar(int leftBrakePin, int rightBrakePin, int steeringAnglePin, int leftMotorPin, int rightMotorPin, int fanSpeedPin) {
   pinMode(leftBrakePin, INPUT);
   pinMode(rightBrakePin, INPUT);
   pinMode(steeringAnglePin, INPUT);
 
   pinMode(leftMotorPin, OUTPUT);
   pinMode(rightMotorPin, OUTPUT);
+  pinMode(fanSpeedPin, OUTPUT);
 
   mLeftBrakePin = leftBrakePin;
   mRightBrakePin = rightBrakePin;
@@ -14,6 +15,7 @@ GravityCar::GravityCar(int leftBrakePin, int rightBrakePin, int steeringAnglePin
 
   mLeftMotorPin = leftMotorPin;
   mRightMotorPin = rightMotorPin;
+  mFanSpeedPin = fanSpeedPin;
 
   setRightMotor(0);
   setLeftMotor(0);
@@ -29,6 +31,11 @@ void GravityCar::setLeftMotor(int leftMotor) {
 void GravityCar::setRightMotor(int rightMotor) {
   mRightMotor = rightMotor;
   analogWrite(mRightMotorPin, rightMotor);
+}
+
+void GravityCar::setFanSpeed(int fanSpeed) {
+  mFanSpeed = fanSpeed;
+  analogWrite(mFanSpeedPin, fanSpeed);
 }
 
 void GravityCar::calibrate(int steps) {
@@ -66,6 +73,8 @@ void GravityCar::readSerialJson(void) {
 
       setLeftMotor(root[JSON_LEFT_MOTOR_TAG]);
       setRightMotor(root[JSON_RIGHT_MOTOR_TAG]);
+      setFanSpeed(root[JSON_FAN_SPEED_TAG]);
+
 
       incomingCommand = "";
     }
