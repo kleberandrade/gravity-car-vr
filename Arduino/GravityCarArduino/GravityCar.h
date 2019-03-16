@@ -15,10 +15,11 @@
 
 #define JSON_LEFT_MOTOR_TAG       "leftmotor"
 #define JSON_RIGHT_MOTOR_TAG      "rightmotor"
+#define JSON_FAN_SPEED_TAG        "fanspeed"
 
 class GravityCar {
   public:
-    GravityCar(int leftBrakePin, int rightBrakePin, int steeringAnglePin, int leftMotorPin, int rightMotorPin);
+    GravityCar(int leftBrakePin, int rightBrakePin, int steeringAnglePin, int leftMotorPin, int rightMotorPin, int fanSpeedPin);
 
     void calibrate(int steps);
 
@@ -31,11 +32,13 @@ class GravityCar {
 
     int getLeftMotor() const { return mLeftMotor; }
     int getRightMotor() const { return mRightMotor; }
+    int getFanSpeed() const { return mFanSpeed; }
 
     String getIncomingCommand() const { return incomingCommand; }
 
     void setLeftMotor(int leftMotor);
     void setRightMotor(int rightMotor);
+    void setFanSpeed(int fanSpeed);
 
   private:
     int mLeftBrakePin;
@@ -44,6 +47,7 @@ class GravityCar {
 
     int mLeftMotorPin;
     int mRightMotorPin;
+    int mFanSpeedPin;
 
     int mLeftBrakeOffset;
     int mRightBrakeOffset;
@@ -51,6 +55,7 @@ class GravityCar {
 
     int mLeftMotor;
     int mRightMotor;
+    int mFanSpeed;
 
     String incomingCommand;
 };

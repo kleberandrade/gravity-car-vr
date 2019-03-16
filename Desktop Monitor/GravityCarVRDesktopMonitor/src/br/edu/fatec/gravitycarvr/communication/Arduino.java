@@ -21,6 +21,7 @@ public final class Arduino implements SerialPortDataListener {
 
     private static final String JSON_LEFT_MOTOR = "leftmotor";
     private static final String JSON_RIGHT_MOTOR = "rightmotor";
+    private static final String JSON_FAN_SPEED = "fanspeed";
 
     private SerialPort mSerialPort = null;
 
@@ -121,6 +122,7 @@ public final class Arduino implements SerialPortDataListener {
 
         jsonObject.put(JSON_LEFT_MOTOR, controlPackage.getLeftVibrationMotor());
         jsonObject.put(JSON_RIGHT_MOTOR, controlPackage.getRightVibrationMotor());
+        jsonObject.put(JSON_FAN_SPEED, controlPackage.getFanSpeed());
 
         if (!isConnected())
             return;
