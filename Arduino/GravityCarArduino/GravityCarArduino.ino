@@ -5,33 +5,32 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-#define PIN_LEFT_BRAKE      A0
-#define PIN_RIGHT_BRAKE     A1
-#define PIN_STEERING_ANGLE  A2
-
-#define PIN_RIGHT_MOTOR     9
-#define PIN_LEFT_MOTOR      10
-#define PIN_FAN_SPEED       11  
-
-#define SERIAL_BAUD_RATE    9600
-#define INTERVAL            20
-
 #define OLED_WIDTH          128
 #define OLED_HEIGHT         32
 #define OLED_ADDR           0x3C
 #define OLED_RESET          4
 
-long previousMillis = 0;
+Adafruit_SSD1306 display(OLED_WIDTH, OLED_HEIGHT, &Wire, OLED_RESET);
 
-Adafruit_SSD1306  display(OLED_WIDTH, OLED_HEIGHT, &Wire, OLED_RESET);
+#define PIN_LEFT_BRAKE      A3
+#define PIN_RIGHT_BRAKE     A1
+#define PIN_STEERING_ANGLE  A2
+
+#define PIN_RIGHT_MOTOR     9
+#define PIN_LEFT_MOTOR      10
+#define PIN_FAN_SPEED       3
+
+#define SERIAL_BAUD_RATE    9600
+#define INTERVAL            5
+
+long previousMillis = 0;
 
 GravityCar car(PIN_LEFT_BRAKE, PIN_RIGHT_BRAKE, PIN_STEERING_ANGLE, PIN_LEFT_MOTOR, PIN_RIGHT_MOTOR, PIN_FAN_SPEED);
 
 void setup() {
-  oled_setup();
-
   Serial.begin(SERIAL_BAUD_RATE);
   while (!Serial) continue;
+  oled_setup();
 }
 
 void oled_setup() {
@@ -52,6 +51,7 @@ void oled_debug() {
   display.print("|");
   display.print(car.getSteeringAngle());
   display.println();
+ 
   display.println("Reading [LM|RM|FS]");
   display.print(car.getLeftMotor());
   display.print("|");
@@ -62,13 +62,17 @@ void oled_debug() {
   display.display();
 }
 
-void loop() {
-  unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis > INTERVAL) {
-    previousMillis = currentMillis;
-    car.writeSerialJson();
-    car.readSerialJson();
+void serialEvent(){
+  car.writeSerialJson();
+  car.readSerialJson();
+}
 
-    oled_debug();
-  }
+void updateFan(){
+  car.zeroCrossInt();
+}
+
+void loop() {
+  updateFan();
+  //oled_debug();
+  delayMicroseconds(INTERVAL);
 }

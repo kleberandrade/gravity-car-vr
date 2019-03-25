@@ -8,14 +8,14 @@
 #include <ArduinoJson.h>
 #include "Arduino.h"
 
-#define JSON_BUFFER_SIZE          64
-#define JSON_LEFT_BRAKE_TAG       "leftbrake"
-#define JSON_RIGHT_BRAKE_TAG      "rightbrake"
-#define JSON_STEERING_ANGLE_TAG   "steeringangle"
+#define JSON_BUFFER_SIZE          128
+#define JSON_LEFT_BRAKE_TAG       "LB"
+#define JSON_RIGHT_BRAKE_TAG      "RB"
+#define JSON_STEERING_ANGLE_TAG   "SA"
 
-#define JSON_LEFT_MOTOR_TAG       "leftmotor"
-#define JSON_RIGHT_MOTOR_TAG      "rightmotor"
-#define JSON_FAN_SPEED_TAG        "fanspeed"
+#define JSON_LEFT_MOTOR_TAG       "LM"
+#define JSON_RIGHT_MOTOR_TAG      "RM"
+#define JSON_FAN_SPEED_TAG        "FA"
 
 class GravityCar {
   public:
@@ -40,6 +40,8 @@ class GravityCar {
     void setRightMotor(int rightMotor);
     void setFanSpeed(int fanSpeed);
 
+    void zeroCrossInt(void);
+
   private:
     int mLeftBrakePin;
     int mRightBrakePin;
@@ -55,7 +57,8 @@ class GravityCar {
 
     int mLeftMotor;
     int mRightMotor;
-    int mFanSpeed;
+    
+    volatile int mFanSpeed;
 
     String incomingCommand;
 };

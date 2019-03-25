@@ -19,6 +19,7 @@ GravityCar::GravityCar(int leftBrakePin, int rightBrakePin, int steeringAnglePin
 
   setRightMotor(0);
   setLeftMotor(0);
+  setFanSpeed(0);
 
   incomingCommand = "";
 }
@@ -35,7 +36,6 @@ void GravityCar::setRightMotor(int rightMotor) {
 
 void GravityCar::setFanSpeed(int fanSpeed) {
   mFanSpeed = fanSpeed;
-  analogWrite(mFanSpeedPin, fanSpeed);
 }
 
 void GravityCar::calibrate(int steps) {
@@ -57,7 +57,10 @@ void GravityCar::writeSerialJson(void) {
 }
 
 void GravityCar::readSerialJson(void) {
+  
   while (Serial.available() > 0) {
+    noInterrupts();
+
     char command = Serial.read();
     incomingCommand += command;
 
@@ -70,13 +73,30 @@ void GravityCar::readSerialJson(void) {
         incomingCommand = "";
         return;
       }
-
+      
       setLeftMotor(root[JSON_LEFT_MOTOR_TAG]);
       setRightMotor(root[JSON_RIGHT_MOTOR_TAG]);
       setFanSpeed(root[JSON_FAN_SPEED_TAG]);
 
-
       incomingCommand = "";
     }
+  }
+
+  interrupts();
+}
+
+void GravityCar::zeroCrossInt(void) {
+  int power = map(mFanSpeed, 0, 255, 30, 100);
+  
+  int powertime = (82 * (100 - power));
+  if (powertime <= 820)
+    digitalWrite(mFanSpeedPin, HIGH);
+  else if (powertime >= 8000)
+    digitalWrite(mFanSpeedPin, LOW);
+  else if ((powertime > 820) && (powertime < 8000)){
+    delayMicroseconds(powertime);
+    digitalWrite(mFanSpeedPin, HIGH);
+    delayMicroseconds(8);
+    digitalWrite(mFanSpeedPin, LOW);
   }
 }

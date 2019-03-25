@@ -15,13 +15,13 @@ public final class Arduino implements SerialPortDataListener {
 
     private static final int QUEUE_SIZE = 64;
 
-    private static final String JSON_LEFT_BRAKE = "leftbrake";
-    private static final String JSON_RIGHT_BRAKE = "rightbrake";
-    private static final String JSON_STEERING_ANGLE = "steeringangle";
+    private static final String JSON_LEFT_BRAKE = "LB";
+    private static final String JSON_RIGHT_BRAKE = "RB";
+    private static final String JSON_STEERING_ANGLE = "SA";
 
-    private static final String JSON_LEFT_MOTOR = "leftmotor";
-    private static final String JSON_RIGHT_MOTOR = "rightmotor";
-    private static final String JSON_FAN_SPEED = "fanspeed";
+    private static final String JSON_LEFT_MOTOR = "LM";
+    private static final String JSON_RIGHT_MOTOR = "RM";
+    private static final String JSON_FAN_SPEED = "FA";
 
     private SerialPort mSerialPort = null;
 
