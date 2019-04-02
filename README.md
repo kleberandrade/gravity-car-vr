@@ -30,15 +30,15 @@ Simulador imersivo de carrinho de rolimã
 </p>
 
 ## Ferramentas Utilizadas
-- Unity 2018.2.7      - Desenvolvimento do Jogo
-- Linguagem C#        - Programação do Jogo
-- Netbeans            - Ambiente de desenvolvimento do Monitor para Desktop
-- Android Studio      - Ambiente de desenvolvimento do Plugin android
-- Linguagem Java      - Programação do Plugin para comunicação Bluetooth e do Monitor
-- Arduino             - Ambiente para sistemas embarcados
-- [ArduinoJson](https://arduinojson.org/) - Parser JSON eficiente para Arduino
-- [JSerialComm](http://fazecast.github.io/jSerialComm/) - Comunicação Serial para Java
-- Fusion 360          - Modelagem 3D do carrinho mecânico
+*   Unity 2018.2.7      - Desenvolvimento do Jogo
+*   Linguagem C#        - Programação do Jogo
+*   Netbeans            - Ambiente de desenvolvimento do Monitor para Desktop
+*   Android Studio      - Ambiente de desenvolvimento do Plugin android
+*   Linguagem Java      - Programação do Plugin para comunicação Bluetooth e do Monitor
+*   Arduino             - Ambiente para sistemas embarcados
+*   [ArduinoJson](https://arduinojson.org/) - Parser JSON eficiente para Arduino
+*   [JSerialComm](http://fazecast.github.io/jSerialComm/) - Comunicação Serial para Java
+*   Fusion 360          - Modelagem 3D do carrinho mecânico
 
 ## Configurações
 
@@ -46,35 +46,32 @@ Simulador imersivo de carrinho de rolimã
 
 #### Instalar biblioteca ArduinoJson
 
-- Abrir o menu Sketch -> Incluir Bibliotecas -> Gerenciar Bibliotecas
-- Procurar a biblioteca "ArduinoJson"
-- Instalar a versão 5.13.3
+*   Abrir o menu Sketch -> Incluir Bibliotecas -> Gerenciar Bibliotecas
+*   Procurar a biblioteca "ArduinoJson"
+*   Instalar a versão 5.13.3
 
 #### Instalar biblioteca OLED
-
-- Abrir o menu Sketch -> Incluir Bibliotecas -> Gerenciar Bibliotecas
-- Procurar a biblioteca "Adafruit GFX Library"
-- Instalar a versão 1.4.2
-- Procurar a biblioteca "Adafruit SSD1306"
-- Instalar a versão 1.2.9
+*   Abrir o menu Sketch -> Incluir Bibliotecas -> Gerenciar Bibliotecas
+*   Procurar a biblioteca "Adafruit GFX Library"
+*   Instalar a versão 1.4.2
+*   Procurar a biblioteca "Adafruit SSD1306"
+*   Instalar a versão 1.2.9
 
 ## Créditos
+*   Bruno Cardoso Ambrosio
+*   Fernando Daniel Muniz
+*   Guilbert Adalson de Oliveira
+*   Jader Artur Costa
+*   Leticia Yasmin Luiz
+*   Maiara de Carvalho Martins
+*   Maini Militao Brito
+*   Mauricio Pierangeli de Albuquerque Rother
+*   Raul César Rodrigues da Silva Pavani
+*   Tiago Guerino de Oliveira Bassani
+*   Victoria Andressa Santos Macedo de Faria
+*   Kleber de Oliveira Andrade (Orientador)
 
-- Bruno Cardoso Ambrosio
-- Fernando Daniel Muniz
-- Guilbert Adalson de Oliveira
-- Jader Artur Costa
-- Leticia Yasmin Luiz
-- Maiara de Carvalho Martins
-- Maini Militao Brito
-- Mauricio Pierangeli de Albuquerque Rother
-- Raul César Rodrigues da Silva Pavani
-- Tiago Guerino de Oliveira Bassani
-- Victoria Andressa Santos Macedo de Faria
-- Kleber de Oliveira Andrade (Orientador)
-
-Licença
-----
+## Licença
 
     Copyright 2018 Fatec Americana
     

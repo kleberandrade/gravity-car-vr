@@ -67,12 +67,7 @@ void serialEvent(){
   car.readSerialJson();
 }
 
-void updateFan(){
-  car.zeroCrossInt();
-}
-
 void loop() {
-  updateFan();
-  //oled_debug();
+  oled_debug();
   delayMicroseconds(INTERVAL);
 }

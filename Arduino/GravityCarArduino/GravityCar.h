@@ -1,7 +1,3 @@
-/*
-  GravityCar.h - Library for gravity car simulator.
-*/
-
 #ifndef __GRAVITY_CAR_H__
 #define __GRAVITY_CAR_H__
 
@@ -21,8 +17,6 @@ class GravityCar {
   public:
     GravityCar(int leftBrakePin, int rightBrakePin, int steeringAnglePin, int leftMotorPin, int rightMotorPin, int fanSpeedPin);
 
-    void calibrate(int steps);
-
     void writeSerialJson(void);
     void readSerialJson(void);
 
@@ -39,8 +33,6 @@ class GravityCar {
     void setLeftMotor(int leftMotor);
     void setRightMotor(int rightMotor);
     void setFanSpeed(int fanSpeed);
-
-    void zeroCrossInt(void);
 
   private:
     int mLeftBrakePin;
