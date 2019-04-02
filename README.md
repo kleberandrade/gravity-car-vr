@@ -6,6 +6,8 @@ Simulador imersivo de carrinho de rolimã
 
 ## Esquemático mecânico
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ba0b008972bf4aa5a86ee67078354ba4)](https://app.codacy.com/app/kleberandrade/gravity-car-vr?utm_source=github.com&utm_medium=referral&utm_content=kleberandrade/gravity-car-vr&utm_campaign=Badge_Grade_Dashboard)
+
 <p align="center">
   <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/hardware.PNG" height="500"/>
 </p>
