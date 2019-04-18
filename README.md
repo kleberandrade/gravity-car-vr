@@ -1,35 +1,45 @@
+
+# Simulador imersivo de carrinho de rolimã
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ba0b008972bf4aa5a86ee67078354ba4)](https://app.codacy.com/app/kleberandrade/gravity-car-vr?utm_source=github.com&utm_medium=referral&utm_content=kleberandrade/gravity-car-vr&utm_campaign=Badge_Grade_Dashboard)
+
 <p align="left">
   <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/logotipo.PNG" height="100"/>
 </p>
 
-Simulador imersivo de carrinho de rolimã
+## Esquemático mecânico e eletrônico
 
-## Esquemático mecânico
-
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ba0b008972bf4aa5a86ee67078354ba4)](https://app.codacy.com/app/kleberandrade/gravity-car-vr?utm_source=github.com&utm_medium=referral&utm_content=kleberandrade/gravity-car-vr&utm_campaign=Badge_Grade_Dashboard)
+*   [Gravity Car VR (Hardware)](https://github.com/kleberandrade/gravity-car-vr-hardware) é o projeto mecânico criado no Autodesk Fusion 360 e o esquemático eletrônico criado no Fritzing.
 
 <p align="center">
   <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/hardware.PNG" height="500"/>
 </p>
 
+<p align="center">
+  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/esquematico.png" height="500"/>
+</p>
+
 ## Software de telemetria
+
+*   [Gravity Car Vr (Desktop)](https://github.com/kleberandrade/gravity-car-vr-desktop-monitor) é um sistema desktop criado no Netbeans de telemetria do hardware do carrinho de rolimã, projetado para se conectar via porta serial.
 
 <p align="center">
   <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/sistema.jpeg" height="500"/>
 </p>
 
-## Esquemático elétrico
+## Aplicativo de telemetria
 
-| Componente eletrônico     | Quantidade | Valor Unitário | Valor Total |
-|---------------------------|:----------:|:--------------:|:-----------:|
-| Arduino Uno               |      1     |    R$ 45,90    |   R$ 45,90  |
-| Módulo Bluetooth HC-06    |      1     |    R$ 34,90    |   R$ 34,90  |
-| Potenciômetro Linear 200K |      3     |     R$ 1,20    |   R$ 3,60   |
-| Mini motor de vibração    |     12     |                |             |
+*   [Gravity Car Vr (Android)](https://github.com/MaiaraM/gravity-car-vr-android) é um aplicativo Android de telemetria do hardware do carrinho de rolimã, projetado para se conectar via bluetooth.
 
 <p align="center">
-  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/esquematico.png" height="500"/>
+  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/app_1.png" height="400"/>
+  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/app_2.png" height="400"/>
+  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/app_3.png" height="400"/>
+  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/app_4.png" height="400"/>
+  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/app_5.png" height="400"/>
+  <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/app_6.png" height="400"/>
 </p>
+
 
 ## Ferramentas Utilizadas
 *   Unity 2018.2.7      - Desenvolvimento do Jogo
@@ -42,26 +52,8 @@ Simulador imersivo de carrinho de rolimã
 *   [JSerialComm](http://fazecast.github.io/jSerialComm/) - Comunicação Serial para Java
 *   Fusion 360          - Modelagem 3D do carrinho mecânico
 
-## Configurações
-
-### Arduino 
-
-#### Instalar biblioteca ArduinoJson
-
-*   Abrir o menu Sketch -> Incluir Bibliotecas -> Gerenciar Bibliotecas
-*   Procurar a biblioteca "ArduinoJson"
-*   Instalar a versão 5.13.3
-
-#### Instalar biblioteca OLED
-*   Abrir o menu Sketch -> Incluir Bibliotecas -> Gerenciar Bibliotecas
-*   Procurar a biblioteca "Adafruit GFX Library"
-*   Instalar a versão 1.4.2
-*   Procurar a biblioteca "Adafruit SSD1306"
-*   Instalar a versão 1.2.9
-
 ## Créditos
 *   Bruno Cardoso Ambrosio
-*   Fernando Daniel Muniz
 *   Guilbert Adalson de Oliveira
 *   Jader Artur Costa
 *   Leticia Yasmin Luiz
