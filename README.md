@@ -7,6 +7,8 @@
   <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/logotipo.PNG" height="100"/>
 </p>
 
+Este projeto propõe o desenvolvimento de um simulador imersivo de carrinho de rolimã. No âmbito teórico, serão realizadas pesquisas específicas sobre conceitos de mecânica, eletrônica, física, computação, arte e técnicas de inteligencia artificial (IA) que embasam o desenvolvimento deste projeto. Iniciando a aprendizagem prática, serão codificados sistemas embarcados em linguagem C com Arduino, desenvolvimento de um ambiente virtual em C\# e Unity, codificação de técnicas de IA para os adversários e criação de bibliotecas para comunicação em Java e Android.
+
 ## Esquemático mecânico e eletrônico
 
 *   [Gravity Car VR (Hardware)](https://github.com/kleberandrade/gravity-car-vr-hardware) é o projeto mecânico criado no Autodesk Fusion 360 e o esquemático eletrônico criado no Fritzing.
@@ -40,24 +42,10 @@
   <img src="https://github.com/kleberandrade/gravity-car-vr/blob/master/Figures/app_6.png" height="400"/>
 </p>
 
-
-## Ferramentas Utilizadas
-*   Unity 2018.2.7      - Desenvolvimento do Jogo
-*   Linguagem C#        - Programação do Jogo
-*   Netbeans            - Ambiente de desenvolvimento do Monitor para Desktop
-*   Android Studio      - Ambiente de desenvolvimento do Plugin android
-*   Linguagem Java      - Programação do Plugin para comunicação Bluetooth e do Monitor
-*   Arduino             - Ambiente para sistemas embarcados
-*   [ArduinoJson](https://arduinojson.org/) - Parser JSON eficiente para Arduino
-*   [JSerialComm](http://fazecast.github.io/jSerialComm/) - Comunicação Serial para Java
-*   Fusion 360          - Modelagem 3D do carrinho mecânico
-
 ## Créditos
-*   Bruno Cardoso Ambrosio
 *   Guilbert Adalson de Oliveira
 *   Jader Artur Costa
 *   Leticia Yasmin Luiz
-*   Maiara de Carvalho Martins
 *   Maini Militao Brito
 *   Mauricio Pierangeli de Albuquerque Rother
 *   Raul César Rodrigues da Silva Pavani
@@ -67,7 +55,7 @@
 
 ## Licença
 
-    Copyright 2018 Fatec Americana
+    Copyright 2018-2019 Faculdade de Tecnologia de Americana
     
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
